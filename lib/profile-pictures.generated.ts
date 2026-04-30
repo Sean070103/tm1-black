@@ -1,0 +1,22 @@
+export const profilePicturesByUrl: Record<string, string> = {
+  'https://x.com/matchareee': 'https://pbs.twimg.com/profile_images/2036507450321612800/4BE0WvtJ_normal.jpg',
+  'https://x.com/owenlim225': 'https://pbs.twimg.com/profile_images/1935699801489760256/mBdvae3X_normal.jpg',
+  'https://x.com/rayleighed28': 'https://pbs.twimg.com/profile_images/2032244220233465857/LmaNMqVi_normal.jpg',
+  'https://x.com/rlacumba': 'https://pbs.twimg.com/profile_images/2026848618288967680/B2EAGk8m_normal.jpg',
+  'https://x.com/SoraShiro27': 'https://pbs.twimg.com/profile_images/1955068794415763456/RRR-lfRH_normal.jpg',
+  'https://x.com/Grant_Kacey_': 'https://pbs.twimg.com/profile_images/1920470324069490688/Ky483b_K_normal.jpg',
+  'https://x.com/daisy_onchain': 'https://pbs.twimg.com/profile_images/1958554234581929984/xF1UPzFw_normal.jpg',
+  'https://x.com/Aeriumcius': 'https://pbs.twimg.com/profile_images/2024495740974972929/QKYTn7ii_normal.jpg',
+  'https://www.linkedin.com/in/algorexph/': 'https://static.licdn.com/aero-v1/scds/common/u/images/logos/favicons/v1/favicon.ico',
+  'https://x.com/kazelarwen': 'https://pbs.twimg.com/profile_images/2016366380132487168/ZPbl_hvl_normal.jpg',
+  'https://x.com/Aishie_Talks': 'https://pbs.twimg.com/profile_images/1645650934327017472/M0lf4mgL_normal.jpg',
+  'https://x.com/DeannAndrew': 'https://pbs.twimg.com/profile_images/1921033132112748545/scrmQFfX_normal.jpg',
+  'https://x.com/krtwllmc': 'https://pbs.twimg.com/profile_images/1993096664459231236/5PmhbpPP_normal.jpg',
+  'https://x.com/xKurty_': 'https://pbs.twimg.com/profile_images/1924245869655736320/ukam2O1H_normal.jpg',
+  'https://x.com/ayseerain': 'https://pbs.twimg.com/profile_images/1904172348724658176/-ET_mrlB_normal.jpg',
+  'https://x.com/zengret': 'https://pbs.twimg.com/profile_images/1561255864627240960/qcDrDnrK_normal.jpg',
+  'https://x.com/ara_squared': 'https://pbs.twimg.com/profile_images/2029081431956439041/x_OHZEbp_normal.jpg',
+  'https://x.com/CarlJovzz': 'https://pbs.twimg.com/profile_images/2006272013980299264/tgpVW-sY_normal.jpg',
+  'https://www.linkedin.com/in/erleinureta/': 'https://static.licdn.com/aero-v1/scds/common/u/images/logos/favicons/v1/favicon.ico',
+  'https://x.com/eurekkaaaa7': 'https://pbs.twimg.com/profile_images/1880030298957836291/1Ujc9wKc_normal.jpg'
+};
