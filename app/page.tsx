@@ -1,86 +1,31 @@
 'use client'
 
-import { useState } from 'react'
-import { Menu, X, ArrowRight, Facebook, Instagram, Send } from 'lucide-react'
+import { ArrowRight, Facebook, Instagram, Send } from 'lucide-react'
 import { lumaEvents, teamOverview, activeMembers } from '@/lib/events-data'
 import { profilePicturesByUrl } from '@/lib/profile-pictures.generated'
-
-const navigationItems = [
-  { label: 'HOME', href: '#home' },
-  { label: 'PROGRAMS', href: '#programs' },
-  { label: 'EVENTS', href: '/events' },
-  { label: 'CONTRIBUTORS', href: '/contributors' },
-  { label: 'MEDIA KIT', href: '#media-kit' },
-  { label: 'MEMBERS', href: '#members' },
-  { label: 'PARTNERS', href: '#partners' },
-  { label: 'RESOURCES', href: '#resources' }
-]
+import SiteHeaderNav from '@/components/site-header-nav'
 
 export default function Home() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const featuredEvents = lumaEvents
     .filter((event) => event.status === 'past')
     .slice(0, 3)
 
   return (
-    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Inter', sans-serif" }}>
-      {/* Navigation */}
-      <nav className="fixed w-full top-0 z-50 bg-black/80 backdrop-blur-sm border-b border-neutral-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 md:h-20">
-            <span className="font-bold text-base md:text-lg tracking-tight">team1 ph</span>
-
-            <div className="hidden lg:flex items-center gap-1">
-              {navigationItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-xs font-medium text-neutral-400 hover:text-white transition px-3 py-2"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-
-            <div className="hidden md:flex items-center gap-3">
-              <button className="px-6 py-2 text-xs font-medium text-neutral-300 border border-neutral-800 rounded-lg hover:border-neutral-700 hover:text-white transition duration-200">Login</button>
-              <button className="px-6 py-2 text-xs font-medium text-black bg-white rounded-lg hover:bg-neutral-100 transition duration-200">Browse</button>
-            </div>
-
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 hover:bg-neutral-900 rounded transition">
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
-
-          {mobileMenuOpen && (
-            <div className="lg:hidden pb-4 border-t border-neutral-900 pt-4 space-y-2 bg-neutral-950">
-              {navigationItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="block text-xs font-medium text-neutral-400 hover:text-white px-2 py-2 rounded transition"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
-      </nav>
+    <div className="min-h-screen bg-background text-foreground" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <SiteHeaderNav logoLinked={false} />
 
       {/* Hero Section */}
       <section className="pt-28 md:pt-32 pb-16 md:pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="border border-neutral-800 rounded-2xl p-8 md:p-16 bg-gradient-to-b from-neutral-950 to-black hover:border-neutral-700 transition duration-300">
+          <div className="border border-border rounded-2xl p-8 md:p-16 bg-gradient-to-b from-muted to-background hover:border-muted-foreground/30 transition duration-300">
             <div className="flex flex-col md:flex-row items-start justify-between gap-8 md:gap-12">
               <div className="flex-1">
                 <h1 className="text-3xl md:text-5xl font-bold mb-3 tracking-tight leading-tight">Welcome to Team1</h1>
-                <p className="text-base md:text-lg text-neutral-400 font-light">Community hub • Resources, bounties, and events</p>
+                <p className="text-base md:text-lg text-muted-foreground font-light">Community hub • Resources, bounties, and events</p>
               </div>
               <div className="flex flex-col gap-3 w-full md:w-auto md:flex-shrink-0">
-                <button className="w-full md:w-auto px-6 py-3 bg-white text-black rounded-lg text-sm font-medium hover:bg-neutral-100 transition duration-200 font-semibold">Login</button>
-                <button className="w-full md:w-auto px-6 py-3 border border-neutral-700 text-white rounded-lg text-sm font-medium hover:border-neutral-600 hover:bg-neutral-950 transition duration-200">Browse</button>
+                <button className="w-full md:w-auto px-6 py-3 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition duration-200 font-semibold">Login</button>
+                <button className="w-full md:w-auto px-6 py-3 border border-border text-foreground rounded-lg text-sm font-medium hover:border-muted-foreground/40 hover:bg-muted transition duration-200">Browse</button>
               </div>
             </div>
           </div>
@@ -88,7 +33,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-neutral-900">
+      <section className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-border">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {[
@@ -97,8 +42,8 @@ export default function Home() {
               { label: 'ACTIVE MEMBERS (VERIFIED)', value: String(teamOverview.activeMembersVerified) },
               { label: 'FLOATING MEMBERS', value: String(teamOverview.floatingMembers) }
             ].map((stat, i) => (
-              <div key={i} className="border border-neutral-800 rounded-xl p-6 md:p-8 hover:border-neutral-700 hover:bg-neutral-950/50 transition duration-300 group">
-                <p className="text-neutral-500 text-xs font-semibold uppercase mb-4 tracking-wider group-hover:text-neutral-400 transition">{stat.label}</p>
+              <div key={i} className="border border-border rounded-xl p-6 md:p-8 hover:border-muted-foreground/30 hover:bg-muted/60 transition duration-300 group">
+                <p className="text-muted-foreground text-xs font-semibold uppercase mb-4 tracking-wider group-hover:text-foreground transition">{stat.label}</p>
                 <p className="text-3xl md:text-4xl font-bold tracking-tight">{stat.value}</p>
               </div>
             ))}
@@ -107,18 +52,18 @@ export default function Home() {
       </section>
 
       {/* Events Section */}
-      <section id="events" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-neutral-900">
+      <section id="events" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-border">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10 md:mb-14">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-2 tracking-tight">Events</h2>
-              <p className="text-base md:text-lg text-neutral-400 font-light">All events now live on a dedicated page</p>
+              <p className="text-base md:text-lg text-muted-foreground font-light">All events now live on a dedicated page</p>
             </div>
-            <a href="/events" className="text-neutral-400 hover:text-white text-sm font-medium transition inline-flex items-center gap-2 hover:gap-3 duration-200">Open Events Page <ArrowRight size={16} /></a>
+            <a href="/events" className="text-muted-foreground hover:text-foreground text-sm font-medium transition inline-flex items-center gap-2 hover:gap-3 duration-200">Open Events Page <ArrowRight size={16} /></a>
           </div>
 
-          <div className="mb-8 border border-neutral-800 rounded-xl p-6 md:p-8 bg-neutral-950/50">
-            <p className="text-neutral-300 text-sm md:text-base">
+          <div className="mb-8 border border-border rounded-xl p-6 md:p-8 bg-muted/50">
+            <p className="text-muted-foreground text-sm md:text-base">
               We moved the full event archive to keep the homepage clean and focused.
               Browse all scraped Luma events with improved card layout and direct event links.
             </p>
@@ -126,18 +71,18 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredEvents.map((event) => (
-              <a key={event.id} href="/events" className="block border border-neutral-800 rounded-xl overflow-hidden hover:border-neutral-700 transition duration-300">
-                <div className="w-full h-44 overflow-hidden bg-neutral-800">
+              <a key={event.id} href="/events" className="block border border-border rounded-xl overflow-hidden hover:border-muted-foreground/30 transition duration-300">
+                <div className="w-full h-44 overflow-hidden bg-muted">
                   <img
                     src={event.image}
                     alt={event.title}
                     className="w-full h-full object-cover hover:scale-105 transition duration-300"
                   />
                 </div>
-                <div className="p-5 space-y-2 bg-black">
-                  <p className="text-xs text-neutral-500">{event.date ? new Date(event.date).toLocaleDateString() : 'Date TBA'}</p>
-                  <h3 className="text-base md:text-lg font-bold text-white line-clamp-2">{event.title}</h3>
-                  <p className="text-sm text-neutral-400 line-clamp-1">{event.location || 'Philippines'}</p>
+                <div className="p-5 space-y-2 bg-card">
+                  <p className="text-xs text-muted-foreground">{event.date ? new Date(event.date).toLocaleDateString() : 'Date TBA'}</p>
+                  <h3 className="text-base md:text-lg font-bold text-foreground line-clamp-2">{event.title}</h3>
+                  <p className="text-sm text-muted-foreground line-clamp-1">{event.location || 'Philippines'}</p>
                 </div>
               </a>
             ))}
@@ -146,14 +91,14 @@ export default function Home() {
       </section>
 
       {/* Programs Section */}
-      <section id="programs" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-neutral-900">
+      <section id="programs" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-border">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10 md:mb-14">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-2 tracking-tight">Programs</h2>
-              <p className="text-base md:text-lg text-neutral-400 font-light">Initiatives to accelerate your growth</p>
+              <p className="text-base md:text-lg text-muted-foreground font-light">Initiatives to accelerate your growth</p>
             </div>
-            <a href="#" className="text-neutral-400 hover:text-white text-sm font-medium transition inline-flex items-center gap-2 hover:gap-3 duration-200">View All <ArrowRight size={16} /></a>
+            <a href="#" className="text-muted-foreground hover:text-foreground text-sm font-medium transition inline-flex items-center gap-2 hover:gap-3 duration-200">View All <ArrowRight size={16} /></a>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -175,10 +120,10 @@ export default function Home() {
                 description: 'For content creators and community builders. Share your knowledge and grow your audience with exclusive resources and events.'
               }
             ].map((program, i) => (
-              <div key={i} className="border border-neutral-800 rounded-xl p-7 md:p-8 hover:border-neutral-700 hover:bg-neutral-950/50 transition duration-300 group">
-                <h3 className="text-lg md:text-xl font-bold mb-3 group-hover:text-neutral-100 transition">{program.title}</h3>
-                <p className="text-sm md:text-base text-neutral-400 mb-6 line-clamp-3 group-hover:text-neutral-300 transition">{program.description}</p>
-                <a href="#" className="text-neutral-400 hover:text-white text-xs font-semibold uppercase tracking-wider transition inline-flex items-center gap-2 hover:gap-3 duration-200">View Program <ArrowRight size={14} /></a>
+              <div key={i} className="border border-border rounded-xl p-7 md:p-8 hover:border-muted-foreground/30 hover:bg-muted/60 transition duration-300 group">
+                <h3 className="text-lg md:text-xl font-bold mb-3 group-hover:text-foreground transition">{program.title}</h3>
+                <p className="text-sm md:text-base text-muted-foreground mb-6 line-clamp-3 group-hover:text-muted-foreground transition">{program.description}</p>
+                <a href="#" className="text-muted-foreground hover:text-foreground text-xs font-semibold uppercase tracking-wider transition inline-flex items-center gap-2 hover:gap-3 duration-200">View Program <ArrowRight size={14} /></a>
               </div>
             ))}
           </div>
@@ -186,59 +131,59 @@ export default function Home() {
       </section>
 
       {/* Members Section */}
-      <section id="members" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-neutral-900 relative overflow-hidden">
+      <section id="members" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-border relative overflow-hidden">
         <div className="absolute inset-x-0 bottom-0 h-44 opacity-70 pointer-events-none">
-          <div className="absolute bottom-0 left-[-8%] w-[45%] h-36 bg-gradient-to-t from-neutral-800/70 to-transparent [clip-path:polygon(0_100%,50%_20%,100%_100%)]" />
-          <div className="absolute bottom-0 left-[22%] w-[46%] h-44 bg-gradient-to-t from-neutral-700/80 via-neutral-500/40 to-transparent [clip-path:polygon(0_100%,50%_8%,100%_100%)]" />
-          <div className="absolute bottom-0 right-[-8%] w-[44%] h-32 bg-gradient-to-t from-neutral-800/70 to-transparent [clip-path:polygon(0_100%,52%_28%,100%_100%)]" />
-          <div className="absolute bottom-0 left-[44%] w-[28%] h-24 bg-gradient-to-t from-white/30 to-transparent [clip-path:polygon(0_100%,50%_12%,100%_100%)]" />
+          <div className="absolute bottom-0 left-[-8%] w-[45%] h-36 bg-gradient-to-t from-foreground/[0.08] dark:from-neutral-800/70 to-transparent [clip-path:polygon(0_100%,50%_20%,100%_100%)]" />
+          <div className="absolute bottom-0 left-[22%] w-[46%] h-44 bg-gradient-to-t from-foreground/10 via-muted-foreground/20 dark:from-neutral-700/80 dark:via-neutral-500/40 to-transparent [clip-path:polygon(0_100%,50%_8%,100%_100%)]" />
+          <div className="absolute bottom-0 right-[-8%] w-[44%] h-32 bg-gradient-to-t from-foreground/[0.08] dark:from-neutral-800/70 to-transparent [clip-path:polygon(0_100%,52%_28%,100%_100%)]" />
+          <div className="absolute bottom-0 left-[44%] w-[28%] h-24 bg-gradient-to-t from-foreground/[0.06] dark:from-white/30 to-transparent [clip-path:polygon(0_100%,50%_12%,100%_100%)]" />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(185,227,255,0.12),transparent_42%)] pointer-events-none" />
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10 md:mb-14">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-2 tracking-tight">Active Members</h2>
-              <p className="text-base md:text-lg text-neutral-300 font-light">Shaped by the mountain spirit of Avalanche</p>
+              <p className="text-base md:text-lg text-muted-foreground font-light">Shaped by the mountain spirit of Avalanche</p>
             </div>
-            <a href="/contributors" className="text-neutral-300 hover:text-white text-sm font-medium transition inline-flex items-center gap-2">
+            <a href="/contributors" className="text-muted-foreground hover:text-foreground text-sm font-medium transition inline-flex items-center gap-2">
               View Contributors <ArrowRight size={15} />
             </a>
           </div>
 
           <div className="grid grid-cols-1 gap-6">
-            <div className="border border-neutral-700 rounded-xl p-5 md:p-6 bg-neutral-950/70 transition duration-300">
+            <div className="border border-border rounded-xl p-5 md:p-6 bg-muted/80 transition duration-300">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base md:text-lg font-semibold text-white">Active Members</h3>
+                <h3 className="text-base md:text-lg font-semibold text-foreground">Active Members</h3>
               </div>
 
               <div className="flex flex-wrap gap-3">
                 {activeMembers.map((member, idx) => (
                   <article
                     key={member.handle}
-                    className="min-w-[240px] border border-neutral-700 bg-neutral-900/60 p-3 rounded-lg"
+                    className="min-w-[240px] border border-border bg-card/80 p-3 rounded-lg"
                   >
                     <div className="flex items-start gap-3">
-                      <span className="p-0.5 border border-neutral-600 bg-black w-fit rounded-full">
+                      <span className="p-0.5 border border-border bg-background w-fit rounded-full">
                         <img
                           src={profilePicturesByUrl[member.profileUrl] || '/icon-dark-32x32.png'}
                           alt={member.handle}
-                          className="w-12 h-12 object-cover bg-neutral-800 rounded-full"
+                          className="w-12 h-12 object-cover bg-muted rounded-full"
                         />
                       </span>
                       <div className="min-w-0">
-                        <div className="inline-flex items-center gap-2 px-2 py-0.5 border border-neutral-700 bg-neutral-950 mb-1.5 rounded">
-                          <span className="text-[9px] uppercase tracking-[0.2em] text-neutral-300 font-semibold">
+                        <div className="inline-flex items-center gap-2 px-2 py-0.5 border border-border bg-background mb-1.5 rounded">
+                          <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground font-semibold">
                             T1-PH-{String(idx + 1).padStart(3, '0')}
                           </span>
                         </div>
-                        <p className="text-sm font-semibold tracking-tight text-white uppercase truncate">{member.handle}</p>
+                        <p className="text-sm font-semibold tracking-tight text-foreground uppercase truncate">{member.handle}</p>
                       </div>
                     </div>
                     <a
                       href={member.profileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 mt-2 text-[11px] text-neutral-200 bg-neutral-800 border border-neutral-700 px-2 py-1 rounded hover:bg-neutral-700 transition"
+                      className="inline-flex items-center gap-2 mt-2 text-[11px] text-foreground bg-muted border border-border px-2 py-1 rounded hover:bg-muted/80 transition"
                     >
                       Open Profile <ArrowRight size={12} />
                     </a>
@@ -251,15 +196,15 @@ export default function Home() {
       </section>
 
       {/* Partners Section */}
-      <section id="partners" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-neutral-900">
+      <section id="partners" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-border">
         <div className="max-w-7xl mx-auto">
           <div className="mb-10 md:mb-14">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Partners</h2>
-            <p className="text-base md:text-lg text-neutral-400 font-light mt-2">This section is currently on progress.</p>
+            <p className="text-base md:text-lg text-muted-foreground font-light mt-2">This section is currently on progress.</p>
           </div>
 
-          <div className="border border-neutral-800 rounded-xl p-7 md:p-8 bg-neutral-950/50">
-            <p className="text-neutral-300 text-sm md:text-base">
+          <div className="border border-border rounded-xl p-7 md:p-8 bg-muted/50">
+            <p className="text-muted-foreground text-sm md:text-base">
               We are currently curating official partner information and will publish it soon.
             </p>
           </div>
@@ -267,12 +212,12 @@ export default function Home() {
       </section>
 
       {/* Media Kit Section */}
-      <section id="media-kit" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-neutral-900">
+      <section id="media-kit" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-border">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10 md:mb-14">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-2 tracking-tight">Media Kit</h2>
-              <p className="text-base md:text-lg text-neutral-400 font-light">Download official logos, brand guidelines, and assets</p>
+              <p className="text-base md:text-lg text-muted-foreground font-light">Download official logos, brand guidelines, and assets</p>
             </div>
           </div>
 
@@ -295,10 +240,10 @@ export default function Home() {
                 description: 'Ready-to-use presentation templates for events and announcements.'
               }
             ].map((item, i) => (
-              <div key={i} className="border border-neutral-800 rounded-xl p-7 md:p-8 hover:border-neutral-700 hover:bg-neutral-950/50 transition duration-300 group">
-                <h3 className="text-lg md:text-xl font-bold mb-3 group-hover:text-neutral-100 transition">{item.title}</h3>
-                <p className="text-sm md:text-base text-neutral-400 mb-6 group-hover:text-neutral-300 transition">{item.description}</p>
-                <a href="#" className="text-neutral-400 hover:text-white text-xs font-semibold uppercase tracking-wider transition inline-flex items-center gap-2 hover:gap-3 duration-200">Download <ArrowRight size={14} /></a>
+              <div key={i} className="border border-border rounded-xl p-7 md:p-8 hover:border-muted-foreground/30 hover:bg-muted/60 transition duration-300 group">
+                <h3 className="text-lg md:text-xl font-bold mb-3 group-hover:text-foreground transition">{item.title}</h3>
+                <p className="text-sm md:text-base text-muted-foreground mb-6 group-hover:text-muted-foreground transition">{item.description}</p>
+                <a href="#" className="text-muted-foreground hover:text-foreground text-xs font-semibold uppercase tracking-wider transition inline-flex items-center gap-2 hover:gap-3 duration-200">Download <ArrowRight size={14} /></a>
               </div>
             ))}
           </div>
@@ -306,11 +251,11 @@ export default function Home() {
       </section>
 
       {/* Resources Section */}
-      <section id="resources" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-neutral-900">
+      <section id="resources" className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-border">
         <div className="max-w-7xl mx-auto">
           <div className="mb-10 md:mb-14">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Resources</h2>
-            <p className="text-base md:text-lg text-neutral-400 font-light mt-2">Essential links and resources</p>
+            <p className="text-base md:text-lg text-muted-foreground font-light mt-2">Essential links and resources</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -351,10 +296,10 @@ export default function Home() {
                 href={resource.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-neutral-800 rounded-xl p-7 md:p-8 hover:border-neutral-700 hover:bg-neutral-950/50 transition duration-300 group"
+                className="border border-border rounded-xl p-7 md:p-8 hover:border-muted-foreground/30 hover:bg-muted/60 transition duration-300 group"
               >
-                <h3 className="text-lg font-bold mb-2 group-hover:text-neutral-100 transition">{resource.title}</h3>
-                <p className="text-sm text-neutral-400 group-hover:text-neutral-300 transition">{resource.description}</p>
+                <h3 className="text-lg font-bold mb-2 group-hover:text-foreground transition">{resource.title}</h3>
+                <p className="text-sm text-muted-foreground group-hover:text-muted-foreground transition">{resource.description}</p>
               </a>
             ))}
           </div>
@@ -362,50 +307,50 @@ export default function Home() {
       </section>
 
       {/* Verify Member Section */}
-      <section className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-neutral-900">
+      <section className="pb-20 md:pb-28 px-4 sm:px-6 lg:px-8 border-b border-border">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16 tracking-tight">Verify Member</h2>
 
           <form className="space-y-8 mb-14 md:mb-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               <div>
-                <label className="block text-xs font-semibold text-neutral-500 uppercase mb-3 tracking-wider">Email Address</label>
+                <label className="block text-xs font-semibold text-muted-foreground uppercase mb-3 tracking-wider">Email Address</label>
                 <input 
                   type="email" 
                   placeholder="name@example.com" 
-                  className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-700 focus:ring-1 focus:ring-neutral-800 transition duration-200" 
+                  className="w-full bg-card border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring transition duration-200" 
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-neutral-500 uppercase mb-3 tracking-wider">X Handle</label>
+                <label className="block text-xs font-semibold text-muted-foreground uppercase mb-3 tracking-wider">X Handle</label>
                 <div className="flex">
-                  <span className="bg-neutral-950 border border-r-0 border-neutral-800 px-4 py-3 text-sm text-neutral-600 rounded-l-lg">@</span>
+                  <span className="bg-card border border-r-0 border-border px-4 py-3 text-sm text-muted-foreground rounded-l-lg">@</span>
                   <input 
                     type="text" 
                     placeholder="username" 
-                    className="flex-1 bg-neutral-950 border border-neutral-800 rounded-r-lg px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-700 focus:ring-1 focus:ring-neutral-800 transition duration-200" 
+                    className="flex-1 bg-card border border-border rounded-r-lg px-4 py-3 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring transition duration-200" 
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-neutral-500 uppercase mb-3 tracking-wider">Telegram Handle</label>
+                <label className="block text-xs font-semibold text-muted-foreground uppercase mb-3 tracking-wider">Telegram Handle</label>
                 <div className="flex">
-                  <span className="bg-neutral-950 border border-r-0 border-neutral-800 px-4 py-3 text-sm text-neutral-600 rounded-l-lg">@</span>
+                  <span className="bg-card border border-r-0 border-border px-4 py-3 text-sm text-muted-foreground rounded-l-lg">@</span>
                   <input 
                     type="text" 
                     placeholder="username" 
-                    className="flex-1 bg-neutral-950 border border-neutral-800 rounded-r-lg px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-700 focus:ring-1 focus:ring-neutral-800 transition duration-200" 
+                    className="flex-1 bg-card border border-border rounded-r-lg px-4 py-3 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring transition duration-200" 
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-neutral-500 uppercase mb-3 tracking-wider">Discord ID</label>
+                <label className="block text-xs font-semibold text-muted-foreground uppercase mb-3 tracking-wider">Discord ID</label>
                 <div className="flex">
-                  <span className="bg-neutral-950 border border-r-0 border-neutral-800 px-4 py-3 text-sm text-neutral-600 rounded-l-lg">@</span>
+                  <span className="bg-card border border-r-0 border-border px-4 py-3 text-sm text-muted-foreground rounded-l-lg">@</span>
                   <input 
                     type="text" 
                     placeholder="username" 
-                    className="flex-1 bg-neutral-950 border border-neutral-800 rounded-r-lg px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-700 focus:ring-1 focus:ring-neutral-800 transition duration-200" 
+                    className="flex-1 bg-card border border-border rounded-r-lg px-4 py-3 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring transition duration-200" 
                   />
                 </div>
               </div>
@@ -413,7 +358,7 @@ export default function Home() {
             <div className="flex justify-center">
               <button 
                 type="submit" 
-                className="px-8 py-3 border border-neutral-700 rounded-lg text-neutral-400 hover:text-white hover:border-neutral-600 hover:bg-neutral-950 transition duration-200 text-xs font-semibold uppercase tracking-wider inline-flex items-center gap-2 group"
+                className="px-8 py-3 border border-border rounded-lg text-muted-foreground hover:text-foreground hover:border-muted-foreground/40 hover:bg-muted transition duration-200 text-xs font-semibold uppercase tracking-wider inline-flex items-center gap-2 group"
               >
                 Check Status <ArrowRight size={14} className="group-hover:translate-x-1 transition duration-200" />
               </button>
@@ -422,55 +367,55 @@ export default function Home() {
 
           {/* Contact & Media Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            <div className="border border-neutral-800 rounded-xl p-7 md:p-8 hover:border-neutral-700 hover:bg-neutral-950/50 transition duration-300 group">
-              <h3 className="text-lg md:text-xl font-bold mb-2 group-hover:text-neutral-100 transition">Contact Us</h3>
-              <p className="text-sm md:text-base text-neutral-400 mb-6 group-hover:text-neutral-300 transition">Reach out for partnerships, events, and press inquiries.</p>
-              <a href="#" className="text-neutral-400 hover:text-white text-xs font-semibold uppercase tracking-wider transition inline-flex items-center gap-2 hover:gap-3 duration-200">View Options <ArrowRight size={14} /></a>
+            <div className="border border-border rounded-xl p-7 md:p-8 hover:border-muted-foreground/30 hover:bg-muted/60 transition duration-300 group">
+              <h3 className="text-lg md:text-xl font-bold mb-2 group-hover:text-foreground transition">Contact Us</h3>
+              <p className="text-sm md:text-base text-muted-foreground mb-6 group-hover:text-muted-foreground transition">Reach out for partnerships, events, and press inquiries.</p>
+              <a href="#" className="text-muted-foreground hover:text-foreground text-xs font-semibold uppercase tracking-wider transition inline-flex items-center gap-2 hover:gap-3 duration-200">View Options <ArrowRight size={14} /></a>
             </div>
-            <div className="border border-neutral-800 rounded-xl p-7 md:p-8 hover:border-neutral-700 hover:bg-neutral-950/50 transition duration-300 group">
-              <h3 className="text-lg md:text-xl font-bold mb-2 group-hover:text-neutral-100 transition">Media Kit</h3>
-              <p className="text-sm md:text-base text-neutral-400 mb-6 group-hover:text-neutral-300 transition">Download official logos, brand guidelines, and assets.</p>
-              <a href="#" className="text-neutral-400 hover:text-white text-xs font-semibold uppercase tracking-wider transition inline-flex items-center gap-2 hover:gap-3 duration-200">Open Kit <ArrowRight size={14} /></a>
+            <div className="border border-border rounded-xl p-7 md:p-8 hover:border-muted-foreground/30 hover:bg-muted/60 transition duration-300 group">
+              <h3 className="text-lg md:text-xl font-bold mb-2 group-hover:text-foreground transition">Media Kit</h3>
+              <p className="text-sm md:text-base text-muted-foreground mb-6 group-hover:text-muted-foreground transition">Download official logos, brand guidelines, and assets.</p>
+              <a href="#" className="text-muted-foreground hover:text-foreground text-xs font-semibold uppercase tracking-wider transition inline-flex items-center gap-2 hover:gap-3 duration-200">Open Kit <ArrowRight size={14} /></a>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 border-t border-neutral-900">
+      <footer className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 border-t border-border">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
             <div>
               <h3 className="font-bold text-base mb-3">Team1 Philippines</h3>
-              <p className="text-neutral-500 text-sm font-light leading-relaxed">Building the Avalanche community in the Philippines</p>
+              <p className="text-muted-foreground text-sm font-light leading-relaxed">Building the Avalanche community in the Philippines</p>
             </div>
             <div>
-              <h4 className="font-semibold text-xs mb-4 uppercase tracking-wider text-neutral-400">Links</h4>
+              <h4 className="font-semibold text-xs mb-4 uppercase tracking-wider text-muted-foreground">Links</h4>
               <ul className="space-y-3">
-                <li><a href="https://go.team1.network/philippines" target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-white transition text-sm duration-200">Team1</a></li>
-                <li><a href="https://go.team1.network/philippines-cascade" target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-white transition text-sm duration-200">Cascade</a></li>
-                <li><a href="https://go.team1.network/philippines-builder" target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-white transition text-sm duration-200">Builder</a></li>
-                <li><a href="https://go.team1.network/philippines-core" target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-white transition text-sm duration-200">Core</a></li>
+                <li><a href="https://go.team1.network/philippines" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition text-sm duration-200">Team1</a></li>
+                <li><a href="https://go.team1.network/philippines-cascade" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition text-sm duration-200">Cascade</a></li>
+                <li><a href="https://go.team1.network/philippines-builder" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition text-sm duration-200">Builder</a></li>
+                <li><a href="https://go.team1.network/philippines-core" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition text-sm duration-200">Core</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-xs mb-4 uppercase tracking-wider text-neutral-400">Team1 Socials</h4>
+              <h4 className="font-semibold text-xs mb-4 uppercase tracking-wider text-muted-foreground">Team1 Socials</h4>
               <ul className="space-y-3">
-                <li><a href="https://www.facebook.com/avalancheteam1philippines/" target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-white transition text-sm duration-200 inline-flex items-center gap-2"><Facebook size={14} /> Facebook</a></li>
-                <li><a href="https://www.instagram.com/team1philippines" target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-white transition text-sm duration-200 inline-flex items-center gap-2"><Instagram size={14} /> Instagram</a></li>
-                <li><a href="https://t.me/team1philippines" target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-white transition text-sm duration-200 inline-flex items-center gap-2"><Send size={14} /> Telegram</a></li>
+                <li><a href="https://www.facebook.com/avalancheteam1philippines/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition text-sm duration-200 inline-flex items-center gap-2"><Facebook size={14} /> Facebook</a></li>
+                <li><a href="https://www.instagram.com/team1philippines" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition text-sm duration-200 inline-flex items-center gap-2"><Instagram size={14} /> Instagram</a></li>
+                <li><a href="https://t.me/team1philippines" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition text-sm duration-200 inline-flex items-center gap-2"><Send size={14} /> Telegram</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-xs mb-4 uppercase tracking-wider text-neutral-400">Contact</h4>
+              <h4 className="font-semibold text-xs mb-4 uppercase tracking-wider text-muted-foreground">Contact</h4>
               <ul className="space-y-3">
-                <li><a href="mailto:hello@team1ph.com" className="text-neutral-500 hover:text-white transition text-sm duration-200">Email</a></li>
-                <li><a href="#" className="text-neutral-500 hover:text-white transition text-sm duration-200">Partnerships</a></li>
+                <li><a href="mailto:hello@team1ph.com" className="text-muted-foreground hover:text-foreground transition text-sm duration-200">Email</a></li>
+                <li><a href="#" className="text-muted-foreground hover:text-foreground transition text-sm duration-200">Partnerships</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-neutral-900 pt-8 md:pt-10 text-center">
-            <p className="text-neutral-500 text-xs md:text-sm font-light">© 2024 Team1 Philippines. All rights reserved. Built for impact. Designed for builders.</p>
+          <div className="border-t border-border pt-8 md:pt-10 text-center">
+            <p className="text-muted-foreground text-xs md:text-sm font-light">© 2026 Team1 Philippines. All rights reserved. Built for impact. Designed for builders.</p>
           </div>
         </div>
       </footer>

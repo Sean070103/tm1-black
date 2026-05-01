@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
+import SiteLogoMark from '@/components/site-logo-mark'
 
 const navItems = [
   { label: 'HOME', href: '/' },
@@ -23,7 +24,9 @@ export default function GlobalNavbar() {
     <nav className="fixed w-full top-0 z-50 bg-black/80 backdrop-blur-sm border-b border-neutral-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
-          <a href="/" className="font-bold text-base md:text-lg tracking-tight">team1 ph</a>
+          <a href="/" className="inline-flex items-center">
+            <SiteLogoMark className="text-base text-white md:text-lg" />
+          </a>
 
           <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => {

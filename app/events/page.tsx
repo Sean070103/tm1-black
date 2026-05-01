@@ -1,26 +1,15 @@
- 'use client'
+'use client'
 
 import { useMemo, useState } from 'react'
-import { ArrowLeft, ArrowRight, CalendarDays, ExternalLink, MapPin, Search, Users, Menu, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CalendarDays, ExternalLink, MapPin, Search, Users } from 'lucide-react'
 import { lumaEvents } from '@/lib/events-data'
+import SiteHeaderNav from '@/components/site-header-nav'
 
 const sortedEvents = [...lumaEvents]
   .filter((event) => event.status === 'past')
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
-const navigationItems = [
-  { label: 'HOME', href: '/' },
-  { label: 'PROGRAMS', href: '/#programs' },
-  { label: 'EVENTS', href: '/events' },
-  { label: 'CONTRIBUTORS', href: '/contributors' },
-  { label: 'MEDIA KIT', href: '/#media-kit' },
-  { label: 'MEMBERS', href: '/#members' },
-  { label: 'PARTNERS', href: '/#partners' },
-  { label: 'RESOURCES', href: '/#resources' }
-]
-
 export default function EventsPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCity, setSelectedCity] = useState('all')
   const [selectedMonth, setSelectedMonth] = useState('all')
@@ -71,56 +60,19 @@ export default function EventsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white" style={{ fontFamily: "'Inter', sans-serif" }}>
-      <nav className="fixed w-full top-0 z-50 bg-black/80 backdrop-blur-sm border-b border-neutral-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 md:h-20">
-            <a href="/" className="font-bold text-base md:text-lg tracking-tight">team1 ph</a>
+    <main className="min-h-screen bg-background text-foreground" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <SiteHeaderNav />
 
-            <div className="hidden lg:flex items-center gap-1">
-              {navigationItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-xs font-medium text-neutral-400 hover:text-white transition px-3 py-2"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden p-2 hover:bg-neutral-900 rounded transition">
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
-
-          {mobileMenuOpen && (
-            <div className="lg:hidden pb-4 border-t border-neutral-900 pt-4 space-y-2 bg-neutral-950">
-              {navigationItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="block text-xs font-medium text-neutral-400 hover:text-white px-2 py-2 rounded transition"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
-      </nav>
-
-      <section className="pt-24 pb-14 px-4 sm:px-6 lg:px-8 border-b border-neutral-900">
+      <section className="pt-24 pb-14 px-4 sm:px-6 lg:px-8 border-b border-border">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
             <div>
-              <a href="/" className="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition mb-6">
+              <a href="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition mb-6">
                 <ArrowLeft size={15} />
                 Back to Home
               </a>
               <h1 className="text-3xl md:text-5xl font-bold tracking-tight">Team1 Events Archive</h1>
-              <p className="text-neutral-400 mt-3 text-base md:text-lg">
+              <p className="text-muted-foreground mt-3 text-base md:text-lg">
                 Past community events scraped from Luma with direct links and event covers.
               </p>
             </div>
@@ -128,7 +80,7 @@ export default function EventsPage() {
               href="https://luma.com/Team1Philippines?period=past"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-neutral-700 text-sm font-medium text-neutral-300 hover:text-white hover:border-neutral-500 transition"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:border-muted-foreground/40 hover:bg-muted transition"
             >
               View on Luma
               <ExternalLink size={14} />
@@ -141,21 +93,21 @@ export default function EventsPage() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="md:col-span-2 relative">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
               <input
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search by title or location"
-                className="w-full bg-neutral-950 border border-neutral-800 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-700"
+                className="w-full bg-card border border-border rounded-lg pl-10 pr-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring"
               />
             </div>
             <select
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
-              className="bg-neutral-950 border border-neutral-800 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-neutral-700"
+              className="bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-foreground focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring"
             >
               {cityOptions.map((city) => (
-                <option key={city} value={city} className="bg-neutral-950">
+                <option key={city} value={city} className="bg-card text-foreground">
                   {city === 'all' ? 'All Cities' : city}
                 </option>
               ))}
@@ -163,24 +115,24 @@ export default function EventsPage() {
             <select
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(e.target.value)}
-              className="bg-neutral-950 border border-neutral-800 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-neutral-700"
+              className="bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-foreground focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring"
             >
               {monthOptions.map((month) => (
-                <option key={month} value={month} className="bg-neutral-950">
+                <option key={month} value={month} className="bg-card text-foreground">
                   {formatMonth(month)}
                 </option>
               ))}
             </select>
           </div>
 
-          <p className="text-sm text-neutral-400 mb-6">
+          <p className="text-sm text-muted-foreground mb-6">
             Showing {filteredEvents.length} of {sortedEvents.length} events
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-7">
             {filteredEvents.map((event) => (
-              <article key={event.id} className="border border-neutral-800 rounded-xl overflow-hidden bg-neutral-950/40 hover:border-neutral-700 transition duration-300">
-                <div className="w-full h-52 bg-neutral-900 overflow-hidden">
+              <article key={event.id} className="border border-border rounded-xl overflow-hidden bg-card/60 hover:border-muted-foreground/40 transition duration-300">
+                <div className="w-full h-52 bg-muted overflow-hidden">
                   <img
                     src={event.image}
                     alt={event.title}
@@ -191,17 +143,17 @@ export default function EventsPage() {
                 <div className="p-5 space-y-4">
                   <h2 className="text-lg font-bold leading-tight line-clamp-2">{event.title}</h2>
 
-                  <div className="space-y-2 text-sm text-neutral-300">
+                  <div className="space-y-2 text-sm text-muted-foreground">
                     <p className="inline-flex items-center gap-2">
-                      <CalendarDays size={15} className="text-neutral-500" />
+                      <CalendarDays size={15} className="text-muted-foreground shrink-0" />
                       {event.date ? new Date(event.date).toLocaleDateString() : 'Date TBA'}
                     </p>
                     <p className="inline-flex items-center gap-2">
-                      <MapPin size={15} className="text-neutral-500" />
+                      <MapPin size={15} className="text-muted-foreground shrink-0" />
                       {event.location || 'Philippines'}
                     </p>
                     <p className="inline-flex items-center gap-2">
-                      <Users size={15} className="text-neutral-500" />
+                      <Users size={15} className="text-muted-foreground shrink-0" />
                       {event.attendees || 0} attendees
                     </p>
                   </div>
@@ -210,7 +162,7 @@ export default function EventsPage() {
                     href={event.link || 'https://luma.com/Team1Philippines'}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-neutral-300 transition"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-muted-foreground transition"
                   >
                     Open Event
                     <ArrowRight size={14} />
@@ -220,7 +172,7 @@ export default function EventsPage() {
             ))}
           </div>
           {filteredEvents.length === 0 && (
-            <div className="border border-neutral-800 rounded-xl p-8 text-center text-neutral-400 mt-6">
+            <div className="border border-border rounded-xl p-8 text-center text-muted-foreground mt-6 bg-muted/30">
               No events match your filters. Try a different search, city, or month.
             </div>
           )}
