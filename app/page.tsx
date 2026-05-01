@@ -1,11 +1,29 @@
 'use client'
 
+import type { User as SupabaseUser } from '@supabase/supabase-js'
 import { ArrowRight, Facebook, Instagram, Send } from 'lucide-react'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { lumaEvents, teamOverview, activeMembers } from '@/lib/events-data'
 import { profilePicturesByUrl } from '@/lib/profile-pictures.generated'
 import SiteHeaderNav from '@/components/site-header-nav'
+import { createClient } from '@/lib/supabase/client'
 
 export default function Home() {
+  const [user, setUser] = useState<SupabaseUser | null | undefined>(undefined)
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null))
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
   const featuredEvents = lumaEvents
     .filter((event) => event.status === 'past')
     .slice(0, 3)
@@ -24,8 +42,18 @@ export default function Home() {
                 <p className="text-base md:text-lg text-muted-foreground font-light">Community hub • Resources, bounties, and events</p>
               </div>
               <div className="flex flex-col gap-3 w-full md:w-auto md:flex-shrink-0">
-                <button className="w-full md:w-auto px-6 py-3 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition duration-200 font-semibold">Login</button>
-                <button className="w-full md:w-auto px-6 py-3 border border-border text-foreground rounded-lg text-sm font-medium hover:border-muted-foreground/40 hover:bg-muted transition duration-200">Browse</button>
+                <Link
+                  href={user ? '/profile' : '/login'}
+                  className="w-full md:w-auto px-6 py-3 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition duration-200 font-semibold text-center"
+                >
+                  {user ? 'Profile' : 'Login'}
+                </Link>
+                <Link
+                  href="/events"
+                  className="w-full md:w-auto px-6 py-3 border border-border text-foreground rounded-lg text-sm font-medium hover:border-muted-foreground/40 hover:bg-muted transition duration-200 text-center"
+                >
+                  Browse
+                </Link>
               </div>
             </div>
           </div>
